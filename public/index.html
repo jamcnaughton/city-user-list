@@ -12,17 +12,19 @@
 
 <body>
 
-  <!-- TODO Better styling -->
-
-  <!-- TODO Spinner to show while making requests -->
+  <!-- TODO Styling improvements -->
 
   <!-- TODO Accessibility improvements -->
 
-  <input id="city-users" type="button" value="Get Users in City" />
+  <input id="city-users" type="button" value="Get users in city" />
 
-  <input id="nearby-users" type="button" value="Get Users within X miles of City" />
+  <input id="nearby-users" type="button" value="Get users nearby to the city" />
 
   <div id="user-list">
+  </div>
+
+  <div id="spinner" class="hidden spinner">
+    Working...
   </div>
 
   <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
