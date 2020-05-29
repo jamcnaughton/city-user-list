@@ -58,6 +58,6 @@ function getUrlPrefix () {
   if (env !== 'development') {
     return '';
   } else {
-    return 'https://cors-anywhere.herokuapp.com/';
+    return appConfig.proxy;
   }
 }
