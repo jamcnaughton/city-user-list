@@ -148,8 +148,19 @@ class UserService {
       }
     );
 
-    // Return the relevant nearby users.
-    return relevantNearbyUsers;
+    // Combine lists of users (flagging if they are in the city or just nearby).
+    const nearbyUsers = [];
+    for (const user of cityUsers) {
+      user['inCity'] = true;
+      nearbyUsers.push(user);
+    }
+    for (const user of relevantNearbyUsers) {
+      user['inCity'] = false;
+      nearbyUsers.push(user);
+    }
+
+    // Return the nearby users.
+    return nearbyUsers;
 
   }
 
