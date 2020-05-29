@@ -8,6 +8,7 @@ export function log (
 ) {
   const env = process.env.NODE_ENV || 'development';
   if (env === 'development') {
+    // eslint-disable-next-line no-console
     console.log(message);
   }
 }

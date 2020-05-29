@@ -17,6 +17,7 @@ describe (
         log('test');
 
         // Check log not called.
+        // eslint-disable-next-line no-console
         expect(console.log).not.toHaveBeenCalled();
 
       }
