@@ -37,7 +37,7 @@ describe (
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
           {
-            'status':200,
+            'status': 200,
             'contentType': 'application/json',
             'responseText': '[]'
           }

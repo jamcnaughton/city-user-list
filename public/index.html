@@ -12,11 +12,18 @@
 
 <body>
 
-  <!-- TODO Button for listing London Users. -->
+  <!-- TODO Better styling -->
 
-  <!-- TODO Button for listing users within 50 miles of London. -->
+  <!-- TODO Spinner to show while making requests -->
 
-  <!-- TODO Div for containing list of users. -->
+  <!-- TODO Accessibility improvements -->
+
+  <input id="city-users" type="button" value="Get Users in City" />
+
+  <input id="nearby-users" type="button" value="Get Users within X miles of City" />
+
+  <div id="user-list">
+  </div>
 
   <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
   </script>
