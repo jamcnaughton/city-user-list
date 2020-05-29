@@ -1,8 +1,8 @@
-# london-user-list
-Front end for querying an API for listing users in London and those within 50 miles of London.
+# city-user-list
+Front end for querying an API which lists users in a city and those nearby separately.
 
 ## Workings
-This solution uses the city endpoint of the API for getting users in London. 
+This solution is currently configured to use the city endpoint of the supplied API for getting users in London. 
 
 For those outside the city but within 50 miles the solution assumes London to be a specific point (51.509865, -0.118092). The city endpoint is first called for London to find users to discount. Then the endpoint for retrieving all users is queried and the list of returned users iterated through. The solution can then find all those within 50 miles (using the Haversine formula) who are not in the list of users previously returned from the city endpoint.
 
@@ -27,3 +27,8 @@ npm run start
 ```bash
 npm run test
 ```
+
+
+## Troubleshooting
+
+You may run into CORS issues when running this project from a local machine. To resolve this without deploying to a hosted solution you can either use a plugin for your browser to temporary remove the CORS headers (like CORS-anywhere) or you can supply a hosted proxy to make requests through in the appConfig file (an example proxy already exists within the file).
