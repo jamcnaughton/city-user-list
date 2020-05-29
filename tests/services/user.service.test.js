@@ -52,5 +52,37 @@ describe (
       }
     );
 
+    // Test the use of the httpGetCityUsers function.
+    it(
+      'httpGetCityUsers should correctly build the request URL',
+      () => {
+
+        // Establish testing variables.
+        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/users';
+        const onLoad = jasmine.createSpy();  
+
+        // Call the method being tested.
+        userService.httpGetAllUsers(
+          onLoad
+        );
+
+        // Generate a mock response to request called in method being tested.
+        jasmine.Ajax.requests.mostRecent().respondWith(
+          {
+            'status':200,
+            'contentType': 'application/json',
+            'responseText': '[]'
+          }
+        );
+
+        // Check URLs match.
+        expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrl);
+
+        // Check callback called.
+        expect(onLoad).toHaveBeenCalled();
+
+      }
+    );
+
   }
 );

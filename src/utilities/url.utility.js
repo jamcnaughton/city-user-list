@@ -1,7 +1,4 @@
-/**
- * The URL for the API.
- */
-const url = 'https://bpdts-test-app.herokuapp.com';
+import { appConfig } from '../config/app-config';
 
 /**
  * Make a request to the API.
@@ -41,7 +38,7 @@ export function makeApiRequest (suffix, callback) {
  * Get the API URL (with proxy prefix if needed.)
  */
 function getApiURL () {
-  return `${getUrlPrefix()}${url}`;
+  return `${getUrlPrefix()}${appConfig.apiUrl}`;
 }
 
 /**

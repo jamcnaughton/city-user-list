@@ -21,7 +21,20 @@ class UserService {
 
   }
 
-  // TODO Function for requesting all users.
+  /**
+   * Get the list of all the users from the API.
+   *
+   * @param {function} callback The function to handle the returned users.
+   */
+  httpGetAllUsers ( callback) {
+
+    // Use the URL utility to make the request.
+    makeApiRequest(
+      `users`,
+      callback
+    );
+
+  }
 
   // TODO Function for getting users with X-miles of supplied co-ordinates.
 
