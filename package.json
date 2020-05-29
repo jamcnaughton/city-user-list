@@ -1,0 +1,41 @@
+{
+  "name": "london-user-list",
+  "version": "1.0.0",
+  "description": "Front end for querying an API for listing users in London and those within 50 miles of London.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "test": "karma start karma.conf.js",
+    "lint": "eslint --debug src/"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "7.10.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.2",
+    "clean-webpack-plugin": "^1.0.1",
+    "css-loader": "^2.1.0",
+    "eslint": "^5.13.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.16.0",
+    "html-webpack-plugin": "^3.2.0",
+    "karma": "^5.0.9",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
+    "karma-jasmine": "^3.1.1",
+    "karma-jasmine-ajax": "0.1.13",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-webpack": "^4.0.2",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.13.1",
+    "puppeteer": "^3.1.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.9"
+  }
+}
