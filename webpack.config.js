@@ -22,12 +22,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            '@babel/plugin-proposal-class-properties'
-          ]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
