@@ -10,7 +10,7 @@ import { log } from './logging.utility';
 export function makeApiRequest (suffix, callback) {
 
   // Build URL to make request to.
-  const url = `${getApiURL()}/${suffix}`;
+  const url = `${appConfig.apiUrl}/${suffix}`;
 
   // Make a request to the API to get the users in the city.
   const request = new XMLHttpRequest();
@@ -41,23 +41,4 @@ export function makeApiRequest (suffix, callback) {
   request.open('GET', url);
   request.send();
 
-}
-
-/**
- * Get the API URL (with proxy prefix if needed.)
- */
-function getApiURL () {
-  return `${getUrlPrefix()}${appConfig.apiUrl}`;
-}
-
-/**
- * Prefix a proxy to the URL is running from a dev environment to avoid local CORS issues.
- */
-function getUrlPrefix () {
-  const env = process.env.NODE_ENV || 'development';
-  if (env !== 'development') {
-    return '';
-  } else {
-    return appConfig.proxy;
-  }
 }

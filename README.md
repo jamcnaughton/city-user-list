@@ -27,8 +27,3 @@ npm run start
 ```bash
 npm run test
 ```
-
-
-## Troubleshooting
-
-You may run into CORS issues when running this project from a local machine. To resolve this without deploying to a hosted solution you can either use a plugin for your browser to temporary remove the CORS headers (like CORS-anywhere) or you can supply a hosted proxy to make requests through in the appConfig file (an example proxy already exists within the file).

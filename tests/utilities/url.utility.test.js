@@ -25,7 +25,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/test';
+        const expectedUrl = 'http://localhost:8080/api/test';
         const onSuccess = jasmine.createSpy();  
 
         // Call the method being tested.
@@ -58,7 +58,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/test';
+        const expectedUrl = 'http://localhost:8080/api/test';
         const onFail = jasmine.createSpy();  
 
         // Call the method being tested.

@@ -25,7 +25,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/city/Test/users';
+        const expectedUrl = 'http://localhost:8080/api/city/Test/users';
         const onLoad = jasmine.createSpy();  
 
         // Call the method being tested.
@@ -58,7 +58,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/users';
+        const expectedUrl = 'http://localhost:8080/api/users';
         const onLoad = jasmine.createSpy();  
 
         // Call the method being tested.
@@ -129,8 +129,8 @@ describe (
         ];
 
         // Establish testing variables.
-        const expectedUrlOne = 'https://bpdts-test-app.herokuapp.com/city/Test/users';
-        const expectedUrlTwo = 'https://bpdts-test-app.herokuapp.com/users';
+        const expectedUrlOne = 'http://localhost:8080/api/city/Test/users';
+        const expectedUrlTwo = 'http://localhost:8080/api/users';
         const expectedResultsLength = 3;
         let resultsLength = 0;
         const onLoad = (users) => {

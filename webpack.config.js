@@ -5,18 +5,22 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
-
   devServer: {
     contentBase: './public',
+    proxy: {
+      '/api': {
+        target: 'https://bpdts-test-app.herokuapp.com',
+        pathRewrite: {'^/api' : ''},
+        changeOrigin: true,
+        secure: false
+      }
+    }
   },
-
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
   },
-
   devtool: 'source-map',
-
   module: {
     rules: [
       {
@@ -30,7 +34,6 @@ module.exports = {
       },
     ]
   },
-
   plugins: [
     new CleanWebpackPlugin('dist', {}),
     new MiniCssExtractPlugin({
@@ -41,6 +44,6 @@ module.exports = {
       hash: true,
       template: './public/index.html',
       filename: 'index.html',
-    }),
+    })
   ]
 };
