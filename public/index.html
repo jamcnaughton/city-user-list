@@ -6,17 +6,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.chunks.main.css %>">
-  <title>London User List</title>
+  <title>City User List</title>
 
 </head>
 
 <body>
 
-  <!-- TODO Button for listing London Users. -->
+  <!-- TODO Styling improvements -->
 
-  <!-- TODO Button for listing users within 50 miles of London. -->
+  <!-- TODO Accessibility improvements -->
 
-  <!-- TODO Div for containing list of users. -->
+  <input id="city-users" type="button" value="Get users in city" />
+
+  <input id="nearby-users" type="button" value="Get users nearby to the city" />
+
+  <div id="user-list">
+  </div>
+
+  <div id="spinner" class="hidden spinner">
+    Working...
+  </div>
 
   <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
   </script>

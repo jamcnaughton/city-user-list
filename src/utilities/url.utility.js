@@ -1,7 +1,5 @@
-/**
- * The URL for the API.
- */
-const url = 'https://bpdts-test-app.herokuapp.com';
+import { appConfig } from '../config/app-config';
+import { log } from './logging.utility';
 
 /**
  * Make a request to the API.
@@ -11,6 +9,9 @@ const url = 'https://bpdts-test-app.herokuapp.com';
  */
 export function makeApiRequest (suffix, callback) {
 
+  // Build URL to make request to.
+  const url = `${appConfig.apiUrl}/${suffix}`;
+
   // Make a request to the API to get the users in the city.
   const request = new XMLHttpRequest();
   request.overrideMimeType('application/json');
@@ -19,7 +20,10 @@ export function makeApiRequest (suffix, callback) {
   request.addEventListener(
     'load',
     () => {
-      callback(JSON.parse(request.responseText));
+      log(`Received successful response from ${url}`);
+      const responseJson = JSON.parse(request.responseText);
+      log(responseJson);
+      callback(responseJson);
     }
   );
 
@@ -27,31 +31,14 @@ export function makeApiRequest (suffix, callback) {
   request.addEventListener(
     'error',
     () => {
+      log(`Received erroneous response from ${url}`);
       callback(false);
     }
   );
 
   // Send the request.
-  request.open('GET', `${getApiURL()}/${suffix}`);
+  log(`Sending request to ${url}`);
+  request.open('GET', url);
   request.send();
 
-}
-
-/**
- * Get the API URL (with proxy prefix if needed.)
- */
-function getApiURL () {
-  return `${getUrlPrefix()}${url}`;
-}
-
-/**
- * Prefix a proxy to the URL is running from a dev environment to avoid local CORS issues.
- */
-function getUrlPrefix () {
-  const env = process.env.NODE_ENV || 'development';
-  if (env !== 'development') {
-    return '';
-  } else {
-    return 'https://cors-anywhere.herokuapp.com/';
-  }
 }

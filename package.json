@@ -1,7 +1,7 @@
 {
-  "name": "london-user-list",
+  "name": "city-user-list",
   "version": "1.0.0",
-  "description": "Front end for querying an API for listing users in London and those within 50 miles of London.",
+  "description": "ront end for querying an API which lists users in a city and those nearby separately.",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
@@ -9,9 +9,11 @@
     "test": "karma start karma.conf.js",
     "lint": "eslint --debug src/"
   },
+  "dependencies": {
+    "haversine": "1.1.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.0",
-    "@babel/plugin-proposal-class-properties": "7.10.1",
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/preset-env": "^7.1.0",
     "babel-eslint": "^10.0.1",

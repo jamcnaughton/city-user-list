@@ -25,7 +25,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/test';
+        const expectedUrl = 'http://localhost:8080/api/test';
         const onSuccess = jasmine.createSpy();  
 
         // Call the method being tested.
@@ -37,7 +37,7 @@ describe (
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
           {
-            'status':200,
+            'status': 200,
             'contentType': 'application/json',
             'responseText': '[]'
           }
@@ -58,7 +58,7 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'https://bpdts-test-app.herokuapp.com/test';
+        const expectedUrl = 'http://localhost:8080/api/test';
         const onFail = jasmine.createSpy();  
 
         // Call the method being tested.
