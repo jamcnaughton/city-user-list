@@ -22,7 +22,7 @@ describe (
       }
     );
 
-    // Test the use of the httpGetCityUsers function.
+    // Test the use of the click function.
     it(
       'should be able to click test area',
       () => {

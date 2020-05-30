@@ -35,18 +35,26 @@ function getNearbyUsers () {
 
   // Make request to the API.
   showSpinner(true);
-  userService.getNearbyUsers(
+  return userService.getNearbyUsers(
     appConfig.targetCity,
     appConfig.targetCityLatitude,
     appConfig.targetCityLongitude,
-    appConfig.milesFromTargetCity,
+    appConfig.milesFromTargetCity
+  )
+
+  // Display the returned users on successful return.
+  .then(
     (users) => {
       showSpinner(false);
-      if (users) {
-        displayUsers(users);
-      } else {
-        displayError('Unable to retrieve nearby users');
-      }
+      displayUsers(users);
+    }
+  )
+
+  // Display an error on unsuccessful return.
+  .catch(
+    () => {
+      showSpinner(false);
+      displayError('Unable to retrieve nearby users');
     }
   );
 
