@@ -2,29 +2,47 @@
 <html>
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.chunks.main.css %>">
   <title>City User List</title>
-
 </head>
 
 <body>
 
-  <!-- TODO Styling improvements -->
+  <div id="container" class="hidden">
 
-  <input id="nearby-users" type="button" value="Get users in or nearby to the city" tabindex="1"/>
+    <h1 class="main-heading">
+      Find Nearby Users
+    </h1>
 
-  <div id="user-list">
+    <div id="intro" class="introduction">
+      This page allows you to find users in and nearby to a specific city.
+      Currently it is configured to find users either in %CITY% or living within %DISTANCE% miles of %CITY%.
+    </div>
+
+    <div class="controls">
+
+      <input
+      id="nearby-users"
+      class="request-button"
+      type="button"
+      value="Get users in or nearby to %CITY%"
+      tabindex="1"/>
+
+      <span id="spinner" class="hidden spinner" aria-hidden="true">
+        Working...
+      </span>
+
+    </div>
+
+    <div id="user-list">
+    </div>
+
+    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
+    </script>
+
   </div>
-
-  <div id="spinner" class="hidden spinner" aria-hidden="true">
-    Working...
-  </div>
-
-  <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
-  </script>
 
 </body>
 

@@ -1,27 +1,104 @@
+// Global vars.
+$error-color: #c72a1c;
+$break-width: 600px;
+
+// Button vars.
+$button-bg-color-active: #4caf50;
+$button-bg-color-inactive: #9fb3a0;
+$button-bg-color-hover: #45a049;
+$button-font-color-active: #fff;
+$button-font-color-inactive: rgb(241, 239, 239);
+$button-font-size: 16px;
+
+// User entry vars.
+$user-entry-bg-color: rgb(233, 233, 233);
+$user-entry-header-font-size: 15px;
+$user-entry-font-size: 14px;
+
 * {
-  font-family: nta, Arial, sans-serif;
-  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
 }
+
 
 .error-message {
-  color: #c72a1c;
+  color: $error-color;
 }
 
-input {
-  background-color: #4caf50;
-  color: white;
+.request-button {
+  font-size: $button-font-size;
   padding: 14px 20px;
   margin: 20px 0;
   border: none;
   border-radius: 4px;
   font-weight: bold;
-  cursor: pointer;
+
+  @media (max-width: $break-width) {
+    width: 100%;
+    white-space: normal;
+  }
+
+  &:disabled {
+    background-color: $button-bg-color-inactive;
+    color: $button-font-color-inactive;
+  }
+
+  &:enabled {
+    background-color: $button-bg-color-active;
+    color: $button-font-color-active;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-bg-color-hover;
+    }
+
+  }
+
 }
 
-input:hover {
-  background-color: #45a049;
+#user-list {
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.user-entry {
+  background-color: $user-entry-bg-color;
+  border-radius: 4px;
+  padding: 5px 14px;
+  margin: 20px 0;
+  border: none;
+
+  .user-header {
+    font-size: $user-entry-header-font-size;
+    font-weight: bold;
+  }
+
+  .user-span {
+    font-size: $user-entry-font-size;
+  }
+
+}
+
+#container {
+  transition: visibility 0s, opacity 0.5s linear;
+
+  @media (min-width: $break-width) {
+    width: $break-width;
+    margin-left: 20px;
+  }
+
+  @media (max-width: $break-width) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.shown {
+  visibility: visible;
+  opacity: 1;
 }
