@@ -3,6 +3,16 @@ import userService from './services/user.service';
 import { appConfig } from './config/app-config';
 
 /**
+ * Token to parse to replace with city name.
+ */
+const cityToken = '%CITY%';
+
+/**
+ * Token to parse to replace with distance value.
+ */
+const distanceToken = '%DISTANCE%';
+
+/**
  * The user-list element to manipulate.
  */
 let userList;
@@ -30,10 +40,22 @@ document.addEventListener(
         // Disable the button then call the method for getting the nearby users.
         nearbyUsersButton.disabled = true;
         nearbyUsersButton.setAttribute('aria-disabled', true);
+        showElement(userList, false);
         getNearbyUsers();
 
       }
     );
+
+    // Sub in values for button.
+    nearbyUsersButton.value = subInConfigValues(nearbyUsersButton.value);
+
+    // Sub in values for introduction.
+    const introduction = document.getElementById('intro');
+    introduction.innerHTML = subInConfigValues(introduction.innerHTML);
+
+    // Show contents.
+    const container = document.getElementById('container');
+    showElement(container, true);
 
   }
 );
@@ -80,6 +102,12 @@ function displayUsers (users) {
   // Clear user-list.
   clearUserList();
 
+  // Create a div to display the user list heading in.
+  const headingDiv = document.createElement('h2');
+  headingDiv.innerHTML = `Users in or within ${appConfig.milesFromTargetCity} miles of ${appConfig.targetCity}`;
+  headingDiv.className = 'users-heading';
+  userList.appendChild(headingDiv);
+
   // Loop through users.
   for (const user of users) {
 
@@ -88,7 +116,7 @@ function displayUsers (users) {
     userDiv.className = 'user-entry';
 
     // Create a header to display the user name in.
-    const userHeader = document.createElement('h2');
+    const userHeader = document.createElement('h3');
     userHeader.className = 'user-header';
     const userFirstName = user['first_name'] ? user['first_name'] : '?';
     const userLastName = user['last_name'] ? user['last_name'] : '?';
@@ -136,6 +164,26 @@ function clearUserList () {
   for (const child of userList.children) {
     userList.removeChild(child);
   }
+  showElement(userList, true);
+}
+
+/**
+ * Substitute value in from config.
+ *
+ * @param {string} text The text to substitute.
+ * @returns {string} The text with the substitution.
+ */
+function subInConfigValues (text) {
+
+  // Sub in city.
+  text = text.split(cityToken).join(appConfig.targetCity);
+
+  // Sub in distance.
+  text = text.split(distanceToken).join(appConfig.milesFromTargetCity);
+
+  // Return the text with substitutions.
+  return text;
+
 }
 
 /**
@@ -144,9 +192,20 @@ function clearUserList () {
  * @param {boolean} show Flag determining whether to show the spinner (if true) or hide it.
  */
 function showSpinner (show) {
+  showElement(spinner, show);
+}
+
+/**
+ * Control the visibility of an element.
+ *
+ * @param {boolean} show Flag determining whether to show the element (if true) or hide it.
+ */
+function showElement (element, show) {
   if (show) {
-    spinner.classList.remove('hidden');
+    element.classList.remove('hidden');
+    element.classList.add('shown');
   } else {
-    spinner.classList.add('hidden');
+    element.classList.remove('shown');
+    element.classList.add('hidden');
   }
 }
