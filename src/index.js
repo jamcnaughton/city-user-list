@@ -102,6 +102,29 @@ function displayUsers (users) {
   // Clear user-list.
   clearUserList();
 
+  // Sort the users.
+  users.sort(
+    (userA, userB) => {
+      if (userA['last_name'] && userB['last_name']) {
+        if (userA['last_name'] < userB['last_name']) {
+          return -1;
+        }
+        if (userA['last_name'] > userB['last_name']) {
+          return 1;
+        }
+      }
+      if (userA['first_name'] && userB['first_name']) {
+        if (userA['first_name'] < userB['first_name']) {
+          return -1;
+        }
+        if (userA['first_name'] > userB['first_name']) {
+          return 1;
+        }
+      }
+      return 0;
+    }
+  );
+
   // Create a div to display the user list heading in.
   const headingDiv = document.createElement('h2');
   headingDiv.innerHTML = `Users in or within ${appConfig.milesFromTargetCity} miles of ${appConfig.targetCity}`;
