@@ -12,7 +12,7 @@ describe (
       }
     );    
 
-    // After each test set up mock Ajax handling.
+    // After each test remove mock Ajax handling.
     afterEach(
       () => {
         jasmine.Ajax.uninstall();

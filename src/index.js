@@ -23,9 +23,15 @@ let userList;
 let spinner;
 
 // Wait for DOM content to load.
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
+document.addEventListener('DOMContentLoaded', setupMainComponentContent);
+
+/**
+ * Establish the content classes and listeners.
+ */
+export function setupMainComponentContent() {
+
+  // Check the HTML is loaded.
+  if (document.getElementById('container')) {
 
     // Get the elements to manipulate.
     userList = document.getElementById('user-list');
@@ -58,7 +64,8 @@ document.addEventListener(
     showElement(container, true);
 
   }
-);
+
+}
 
 /**
  * Make requests to the API for getting users nearby the supplied city.
@@ -86,7 +93,7 @@ function getNearbyUsers () {
   .catch(
     () => {
       showSpinner(false);
-      displayError('Unable to retrieve nearby users');
+      displayMessage('Unable to retrieve nearby users', true);
     }
   );
 
@@ -102,81 +109,98 @@ function displayUsers (users) {
   // Clear user-list.
   clearUserList();
 
-  // Sort the users.
-  users.sort(
-    (userA, userB) => {
-      if (userA['last_name'] && userB['last_name']) {
-        if (userA['last_name'] < userB['last_name']) {
-          return -1;
+  // Check the number of users returned.
+  if (users.length === 0) {
+
+    // If there are no users to show inform the user.
+    displayMessage('No users were found in or nearby the supplied city.');
+
+  } else {
+
+    // Sort the users.
+    users.sort(
+      (userA, userB) => {
+        if (userA['last_name'] && userB['last_name']) {
+          if (userA['last_name'] < userB['last_name']) {
+            return -1;
+          }
+          if (userA['last_name'] > userB['last_name']) {
+            return 1;
+          }
         }
-        if (userA['last_name'] > userB['last_name']) {
-          return 1;
+        if (userA['first_name'] && userB['first_name']) {
+          if (userA['first_name'] < userB['first_name']) {
+            return -1;
+          }
+          if (userA['first_name'] > userB['first_name']) {
+            return 1;
+          }
         }
+        return 0;
       }
-      if (userA['first_name'] && userB['first_name']) {
-        if (userA['first_name'] < userB['first_name']) {
-          return -1;
-        }
-        if (userA['first_name'] > userB['first_name']) {
-          return 1;
-        }
-      }
-      return 0;
+    );
+
+    // Create a div to display the user list heading in.
+    const headingDiv = document.createElement('h2');
+    headingDiv.innerHTML = `Users in or within ${appConfig.milesFromTargetCity} miles of ${appConfig.targetCity}`;
+    headingDiv.className = 'users-heading';
+    userList.appendChild(headingDiv);
+
+    // Loop through users.
+    for (const user of users) {
+
+      // Create a div to display user information in.
+      const userDiv = document.createElement('div');
+      userDiv.className = 'user-entry';
+
+      // Create a header to display the user name in.
+      const userHeader = document.createElement('h3');
+      userHeader.className = 'user-header';
+      const userFirstName = user['first_name'] ? user['first_name'] : '?';
+      const userLastName = user['last_name'] ? user['last_name'] : '?';
+      userHeader.innerHTML = `${userFirstName} ${userLastName}`;
+
+      // Create a span to display the user e-mail in.
+      const userSpan = document.createElement('h2');
+      userSpan.className = 'user-span';
+      const userEmail = user['email'] ? user['email'] : '?';
+      userSpan.innerHTML = userEmail;
+
+      // Attach the header and the span to the div.
+      userDiv.appendChild(userHeader);
+      userDiv.appendChild(userSpan);
+
+      // Attach the div to the user-list div.
+      userList.appendChild(userDiv);
+
     }
-  );
-
-  // Create a div to display the user list heading in.
-  const headingDiv = document.createElement('h2');
-  headingDiv.innerHTML = `Users in or within ${appConfig.milesFromTargetCity} miles of ${appConfig.targetCity}`;
-  headingDiv.className = 'users-heading';
-  userList.appendChild(headingDiv);
-
-  // Loop through users.
-  for (const user of users) {
-
-    // Create a div to display user information in.
-    const userDiv = document.createElement('div');
-    userDiv.className = 'user-entry';
-
-    // Create a header to display the user name in.
-    const userHeader = document.createElement('h3');
-    userHeader.className = 'user-header';
-    const userFirstName = user['first_name'] ? user['first_name'] : '?';
-    const userLastName = user['last_name'] ? user['last_name'] : '?';
-    userHeader.innerHTML = `${userFirstName} ${userLastName}`;
-
-    // Create a span to display the user e-mail in.
-    const userSpan = document.createElement('h2');
-    userSpan.className = 'user-span';
-    const userEmail = user['email'] ? user['email'] : '?';
-    userSpan.innerHTML = userEmail;
-
-    // Attach the header and the span to the div.
-    userDiv.appendChild(userHeader);
-    userDiv.appendChild(userSpan);
-
-    // Attach the div to the user-list div.
-    userList.appendChild(userDiv);
 
   }
+
+  // Show the user list.
+  showUserList(true);
 
 }
 
 /**
- * Show an error message in the main component.
+ * Show a message in the main component.
  *
  * @param {string} message The message to show the user.
+ * @param {boolean} isError Flag to indicate if this is an error message.
  */
-function displayError (message) {
+function displayMessage (message, isError = false) {
 
   // Clear user-list.
   clearUserList();
 
   // Display an error message in the user list.
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error-message';
-  errorDiv.innerHTML = message;
-  userList.appendChild(errorDiv);
+  const messageDiv = document.createElement('div');
+  messageDiv.className = isError ? 'error-message' : 'info-message';
+  messageDiv.innerHTML = message;
+  userList.appendChild(messageDiv);
+
+  // Show the user list.
+  showUserList(true);
 
 }
 
@@ -187,7 +211,6 @@ function clearUserList () {
   for (const child of userList.children) {
     userList.removeChild(child);
   }
-  showElement(userList, true);
 }
 
 /**
@@ -216,6 +239,15 @@ function subInConfigValues (text) {
  */
 function showSpinner (show) {
   showElement(spinner, show);
+}
+
+/**
+ * Control the visibility of the user list.
+ *
+ * @param {boolean} show Flag determining whether to show the user list (if true) or hide it.
+ */
+function showUserList (show) {
+  showElement(userList, show);
 }
 
 /**

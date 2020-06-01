@@ -1,17 +1,19 @@
 // Global vars.
-$error-color: #c72a1c;
+$message-font-size: 16px;
+$info-colour: #a5a4a4;
+$error-colour: #c72a1c;
 $break-width: 600px;
 
 // Button vars.
-$button-bg-color-active: #4caf50;
-$button-bg-color-inactive: #9fb3a0;
-$button-bg-color-hover: #45a049;
-$button-font-color-active: #fff;
-$button-font-color-inactive: rgb(241, 239, 239);
+$button-bg-colour-active: #4caf50;
+$button-bg-colour-inactive: #9fb3a0;
+$button-bg-colour-hover: #45a049;
+$button-font-colour-active: #fff;
+$button-font-colour-inactive: rgb(241, 239, 239);
 $button-font-size: 16px;
 
 // User entry vars.
-$user-entry-bg-color: rgb(233, 233, 233);
+$user-entry-bg-colour: rgb(233, 233, 233);
 $user-entry-header-font-size: 15px;
 $user-entry-font-size: 14px;
 
@@ -28,9 +30,24 @@ $spinner-diameter-mobile: 50px;
   font-weight: normal;
 }
 
+.message {
+  font-size: $message-font-size;
+  font-weight: bold;
+
+  @media (max-width: $break-width) {
+    text-align: center;
+  }
+  
+}
+
+.info-message {
+  @extend .message;
+  color: $info-colour;
+}
 
 .error-message {
-  color: $error-color;
+  @extend .message;
+  color: $error-colour;
 }
 
 .request-button {
@@ -47,17 +64,17 @@ $spinner-diameter-mobile: 50px;
   }
 
   &:disabled {
-    background-color: $button-bg-color-inactive;
-    color: $button-font-color-inactive;
+    background-color: $button-bg-colour-inactive;
+    color: $button-font-colour-inactive;
   }
 
   &:enabled {
-    background-color: $button-bg-color-active;
-    color: $button-font-color-active;
+    background-color: $button-bg-colour-active;
+    color: $button-font-colour-active;
     cursor: pointer;
 
     &:hover {
-      background-color: $button-bg-color-hover;
+      background-color: $button-bg-colour-hover;
     }
 
   }
@@ -69,7 +86,7 @@ $spinner-diameter-mobile: 50px;
 }
 
 .user-entry {
-  background-color: $user-entry-bg-color;
+  background-color: $user-entry-bg-colour;
   border-radius: 4px;
   padding: 5px 14px;
   margin: 20px 0;
