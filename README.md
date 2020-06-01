@@ -1,10 +1,10 @@
 # city-user-list
-Front end for querying an API which lists users in a city and those nearby separately.
+Front end for querying an API which lists users in and nearby a city.
 
 ## Workings
-This solution is currently configured to use the city endpoint of the supplied API for getting users in London. 
+This solution uses the city endpoint of the supplied API for getting users in the targetted city. It then calls the all users endpoint. Users returned from the first query are excluded from the second query, then the remaining users are iterated through to find those within the specified distance of the target's city central point (using the Haversine formula). The resulting list of users is combined with those returned from the first query to produce all the users in the city and those considered to be nearby.
 
-For those outside the city but within 50 miles the solution assumes London to be a specific point (51.509865, -0.118092). The city endpoint is first called for London to find users to discount. Then the endpoint for retrieving all users is queried and the list of returned users iterated through. The solution can then find all those within 50 miles (using the Haversine formula) who are not in the list of users previously returned from the city endpoint.
+The solution is currently configured to use London as its target city (latitude/longitude: 51.509865, -0.118092) and is set to consider users within 50 miles to be nearby.
 
 ## Commands
 
