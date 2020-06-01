@@ -1,7 +1,7 @@
 # city-user-list
 Front end for querying an API which lists users in and nearby a city.
 
-[View Demo](http://jamcnaughton.github.io/city-user-list/)
+[View Demo](https://jamcnaughton.github.io/city-user-list/index.html)
 
 ## Workings
 This solution uses the city endpoint of the supplied API for getting users in the targetted city. It then calls the all users endpoint. Users returned from the first query are excluded from the second query, then the remaining users are iterated through to find those within the specified distance of the target's city central point (using the Haversine formula). The resulting list of users is combined with those returned from the first query to produce all the users in the city and those considered to be nearby.
