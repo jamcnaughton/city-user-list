@@ -1,28 +1,172 @@
+// Global vars.
+$message-font-size: 16px;
+$info-colour: #a5a4a4;
+$error-colour: #c72a1c;
+$break-width: 600px;
+
+// Button vars.
+$button-bg-colour-active: #4caf50;
+$button-bg-colour-inactive: #9fb3a0;
+$button-bg-colour-hover: #45a049;
+$button-font-colour-active: #fff;
+$button-font-colour-inactive: rgb(241, 239, 239);
+$button-font-size: 16px;
+
+// User entry vars.
+$user-entry-bg-colour: rgb(233, 233, 233);
+$user-entry-header-font-size: 15px;
+$user-entry-font-size: 14px;
+
+// Spinner vars.
+$spinner-colour: rgb(146, 146, 146);
+$spinner-bg-colour: rgb(219, 219, 219);
+$spinner-width: 8px;
+$spinner-diameter: 24px;
+$spinner-width-mobile: 12px;
+$spinner-diameter-mobile: 50px;
+
 * {
-  font-family: nta, Arial, sans-serif;
-  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+.message {
+  font-size: $message-font-size;
+  font-weight: bold;
+
+  @media (max-width: $break-width) {
+    text-align: center;
+  }
+  
+}
+
+.info-message {
+  @extend .message;
+  color: $info-colour;
 }
 
 .error-message {
-  color: #c72a1c;
+  @extend .message;
+  color: $error-colour;
 }
 
-input {
-  width: 100px;
-  background-color: #4caf50;
-  color: white;
+.request-button {
+  font-size: $button-font-size;
   padding: 14px 20px;
   margin: 20px 0;
   border: none;
   border-radius: 4px;
   font-weight: bold;
-  cursor: pointer;
+
+  @media (max-width: $break-width) {
+    width: 100%;
+    white-space: normal;
+  }
+
+  &:disabled {
+    background-color: $button-bg-colour-inactive;
+    color: $button-font-colour-inactive;
+  }
+
+  &:enabled {
+    background-color: $button-bg-colour-active;
+    color: $button-font-colour-active;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-bg-colour-hover;
+    }
+
+  }
+
 }
 
-input:hover {
-  background-color: #45a049;
+#user-list {
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.user-entry {
+  background-color: $user-entry-bg-colour;
+  border-radius: 4px;
+  padding: 5px 14px;
+  margin: 20px 0;
+  border: none;
+
+  .user-header {
+    font-size: $user-entry-header-font-size;
+    font-weight: bold;
+  }
+
+  .user-span {
+    font-size: $user-entry-font-size;
+  }
+
+}
+
+#container {
+  transition: visibility 0s, opacity 0.5s linear;
+
+  @media (min-width: $break-width) {
+    width: $break-width;
+    margin-left: 20px;
+  }
+
+  @media (max-width: $break-width) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+.spinner {
+
+  @media (min-width: $break-width) {
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    height: 100%;
+  }
+  
+  @media (max-width: $break-width) {
+    text-align: center;
+  }
+
 }
 
 .hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hidden.spinner {
   display: none;
+}
+
+.shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.loader {
+  border-style: solid;
+  border-width: $spinner-width;
+  border-color: $spinner-bg-colour;
+  border-top-color: $spinner-colour;
+  border-radius: 50%;
+  width: $spinner-diameter;
+  height: $spinner-diameter;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+
+  @media (max-width: $break-width) {
+    border-width: $spinner-width-mobile;
+    width: $spinner-diameter-mobile;
+    height: $spinner-diameter-mobile;
+  }
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

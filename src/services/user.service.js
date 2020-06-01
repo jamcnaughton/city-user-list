@@ -10,31 +10,19 @@ class UserService {
    * Get the list of users in a city from the API.
    *
    * @param {string} city The city to get users for.
-   * @param {function} callback The function to handle the returned users.
+   * @returns A promise to make the request to the API.
    */
-  httpGetCityUsers (city, callback) {
-
-    // Use the URL utility to make the request.
-    makeApiRequest(
-      `city/${city}/users`,
-      callback
-    );
-
+  httpGetCityUsers (city) {
+    return makeApiRequest(`city/${city}/users`);
   }
 
   /**
    * Get the list of all the users from the API.
    *
-   * @param {function} callback The function to handle the returned users.
+   * @returns A promise to make the request to the API.
    */
-  httpGetAllUsers ( callback) {
-
-    // Use the URL utility to make the request.
-    makeApiRequest(
-      `users`,
-      callback
-    );
-
+  httpGetAllUsers () {
+    return makeApiRequest(`users`);
   }
 
   /**
@@ -44,56 +32,54 @@ class UserService {
    * @param {number} cityLatitude The longitude of the city.
    * @param {number} cityLongitude The longitude of the city.
    * @param {number} distance How close to the city the nearby users must be in miles.
-   * @param {function} callback The function to handle the returned users.
+   * @returns A promise to get all the relevant nearby users.
    */
   getNearbyUsers (
     city,
     cityLatitude,
     cityLongitude,
-    distance,
-    callback
+    distance
   ) {
+
+    // Build array for holding promises.
+    const promises = [];
 
     // Establish arrays of users from requests.
     let allUsers;
     let cityUsers;
 
-    // Establish function to call on completing a request for finding valid users.
-    const onSuccessfulResponse = () => {
-      if (allUsers && cityUsers) {
-        const relevantNearbyUsers = this.getRelevantUsersNearby(
+    // Make a promise to request city users.
+    promises.push(
+      userService.httpGetCityUsers(city)
+      .then(
+        (users) => cityUsers = users
+      )
+    );
+
+    // Make a promise to request all users.
+    promises.push(
+      userService.httpGetAllUsers()
+      .then(
+        (users) => allUsers = users
+      )
+    );
+
+    // Execute both the promises.
+    return Promise.all(promises)
+
+    // Process the returned promises.
+    .then(
+      () => {
+
+        // Return all the relevant users nearby.
+        return this.getRelevantUsersNearby(
           cityUsers,
           allUsers,
           cityLatitude,
           cityLongitude,
           distance
         );
-        callback(relevantNearbyUsers);
-      }
-    };
 
-    // Make request to the API for getting city users.
-    userService.httpGetCityUsers(
-      city,
-      (users) => {
-        if (users) {
-          cityUsers = users;
-          onSuccessfulResponse();
-        } else {
-          callback(false);
-        }
-      }
-    );
-
-    // Make request to the API for getting all users.
-    userService.httpGetAllUsers(
-      (users) => {
-        if (users) {
-          allUsers = users;
-          onSuccessfulResponse();
-        } else {
-          callback(false);
-        }
       }
     );
 
@@ -148,8 +134,19 @@ class UserService {
       }
     );
 
-    // Return the relevant nearby users.
-    return relevantNearbyUsers;
+    // Combine lists of users (flagging if they are in the city or just nearby).
+    const nearbyUsers = [];
+    for (const user of cityUsers) {
+      user['inCity'] = true;
+      nearbyUsers.push(user);
+    }
+    for (const user of relevantNearbyUsers) {
+      user['inCity'] = false;
+      nearbyUsers.push(user);
+    }
+
+    // Return the nearby users.
+    return nearbyUsers;
 
   }
 

@@ -26,13 +26,9 @@ describe (
 
         // Establish testing variables.
         const expectedUrl = 'http://localhost:8080/api/test';
-        const onSuccess = jasmine.createSpy();  
 
         // Call the method being tested.
-        makeApiRequest(
-          'test',
-          onSuccess
-        );
+        makeApiRequest('test');
 
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
@@ -46,9 +42,6 @@ describe (
         // Check URLs match.
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrl);
 
-        // Check callback called.
-        expect(onSuccess).toHaveBeenCalled();
-
       }
     );
 
@@ -58,14 +51,10 @@ describe (
       () => {
 
         // Establish testing variables.
-        const expectedUrl = 'http://localhost:8080/api/test';
-        const onFail = jasmine.createSpy();  
+        const expectedUrl = 'http://localhost:8080/api/test'; 
 
         // Call the method being tested.
-        makeApiRequest(
-          'test',
-          onFail
-        );
+        makeApiRequest('test');
 
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
@@ -78,9 +67,6 @@ describe (
 
         // Check URLs match.
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrl);
-
-        // Check callback called.
-        expect(onFail).toHaveBeenCalled(); 
 
       }
     );

@@ -12,7 +12,7 @@ describe (
       }
     );    
 
-    // After each test set up mock Ajax handling.
+    // After each test remove mock Ajax handling.
     afterEach(
       () => {
         jasmine.Ajax.uninstall();
@@ -26,13 +26,9 @@ describe (
 
         // Establish testing variables.
         const expectedUrl = 'http://localhost:8080/api/city/Test/users';
-        const onLoad = jasmine.createSpy();  
 
         // Call the method being tested.
-        userService.httpGetCityUsers(
-          'Test',
-          onLoad
-        );
+        userService.httpGetCityUsers('Test');
 
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
@@ -45,26 +41,20 @@ describe (
 
         // Check URLs match.
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrl);
-
-        // Check callback called.
-        expect(onLoad).toHaveBeenCalled();
 
       }
     );
 
-    // Test the use of the httpGetCityUsers function.
+    // Test the use of the httpGetAllUsers function.
     it(
-      'httpGetCityUsers should correctly build the request URL',
+      'httpGetAllUsers should correctly build the request URL',
       () => {
 
         // Establish testing variables.
         const expectedUrl = 'http://localhost:8080/api/users';
-        const onLoad = jasmine.createSpy();  
 
         // Call the method being tested.
-        userService.httpGetAllUsers(
-          onLoad
-        );
+        userService.httpGetAllUsers();
 
         // Generate a mock response to request called in method being tested.
         jasmine.Ajax.requests.mostRecent().respondWith(
@@ -77,17 +67,14 @@ describe (
 
         // Check URLs match.
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrl);
-
-        // Check callback called.
-        expect(onLoad).toHaveBeenCalled();
 
       }
     );
 
     // Test the use of the getNearbyUsers function.
     it(
-      'getNearbyUsers should list no users from the city',
-      () => {
+      'getNearbyUsers should list all city users and those nearby',
+      (done) => {
 
         // Mock user lists.
         const mockCityUsers = [
@@ -104,12 +91,6 @@ describe (
         const mockAllUsers = [
           {
             id: 1
-          },
-          {
-            id: 2
-          },
-          {
-            id: 3
           },
           {
             id: 4,
@@ -131,19 +112,27 @@ describe (
         // Establish testing variables.
         const expectedUrlOne = 'http://localhost:8080/api/city/Test/users';
         const expectedUrlTwo = 'http://localhost:8080/api/users';
-        const expectedResultsLength = 3;
-        let resultsLength = 0;
-        const onLoad = (users) => {
-          resultsLength = users.length;
-        }
+        const expectedResultsLength = 6;
 
         // Call the method being tested.
         userService.getNearbyUsers (
           'Test',
           0,
           0,
-          50,
-          onLoad
+          50
+        )
+        .then(
+          (users) => {
+
+            // Check the expected number of users are returned.
+            expect(users.length === expectedResultsLength)
+            .withContext('should have returned 6 users')
+            .toBeTrue();
+
+            // Inform that test is done.
+            done();
+
+          }
         );
 
         // Generate mock responses to requests called in method being tested.
@@ -165,11 +154,6 @@ describe (
         // Check URLs match.
         expect(jasmine.Ajax.requests.first().url).toBe(expectedUrlOne);
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(expectedUrlTwo);
-
-        // Check the expected number of users are returned.
-        expect(resultsLength === expectedResultsLength)
-        .withContext('should have returned 3 users')
-        .toBeTrue();
 
       }
     );

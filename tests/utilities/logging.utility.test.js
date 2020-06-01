@@ -1,4 +1,4 @@
-import { log } from "../../src/utilities/logging.utility";
+import { log } from '../../src/utilities/logging.utility';
 
 // Tests for the Logging Utility.
 describe (
