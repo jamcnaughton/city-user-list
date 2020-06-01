@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="src/styles.f33dc24c6e3874211be7.css?21a6665534f731432811">
+  <title>City User List</title>
+</head>
+
+<body>
+
+  <div id="container" class="hidden">
+
+    <h1 class="main-heading">
+      Find Nearby Users
+    </h1>
+
+    <div id="intro" class="introduction">
+      This page allows you to find users in and nearby to a specific city.
+      Currently it is configured to find users either in %CITY% or living within %DISTANCE% miles of %CITY%.
+    </div>
+
+    <div class="controls">
+
+      <input
+      id="nearby-users"
+      class="request-button"
+      type="button"
+      value="Get users in or nearby to %CITY%"
+      tabindex="1"/>
+
+      <div id="spinner" class="spinner hidden" aria-hidden="true">
+        <div class="loader"></div> 
+      </div>
+
+    </div>
+
+    <div id="user-list">
+    </div>
+
+    <script src="main.4a7cb690d8b1df5c7a15.js?21a6665534f731432811">
+    </script>
+
+  </div>
+
+</body>
+
+</html>
