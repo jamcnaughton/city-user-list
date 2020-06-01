@@ -15,6 +15,14 @@ $user-entry-bg-color: rgb(233, 233, 233);
 $user-entry-header-font-size: 15px;
 $user-entry-font-size: 14px;
 
+// Spinner vars.
+$spinner-colour: rgb(146, 146, 146);
+$spinner-bg-colour: rgb(219, 219, 219);
+$spinner-width: 8px;
+$spinner-diameter: 24px;
+$spinner-width-mobile: 12px;
+$spinner-diameter-mobile: 50px;
+
 * {
   font-family: Arial, sans-serif;
   font-weight: normal;
@@ -93,12 +101,55 @@ $user-entry-font-size: 14px;
 
 }
 
+.spinner {
+
+  @media (min-width: $break-width) {
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    height: 100%;
+  }
+  
+  @media (max-width: $break-width) {
+    text-align: center;
+  }
+
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
 }
 
+.hidden.spinner {
+  display: none;
+}
+
 .shown {
   visibility: visible;
   opacity: 1;
+}
+
+.loader {
+  border-style: solid;
+  border-width: $spinner-width;
+  border-color: $spinner-bg-colour;
+  border-top-color: $spinner-colour;
+  border-radius: 50%;
+  width: $spinner-diameter;
+  height: $spinner-diameter;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+
+  @media (max-width: $break-width) {
+    border-width: $spinner-width-mobile;
+    width: $spinner-diameter-mobile;
+    height: $spinner-diameter-mobile;
+  }
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
