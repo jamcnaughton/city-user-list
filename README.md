@@ -1,8 +1,6 @@
 # city-user-list
 Front end for querying an API which lists users in and nearby a city.
 
-[View Demo](https://jamcnaughton.github.io/city-user-list/index.html)
-
 ## Workings
 This solution uses the city endpoint of the supplied API for getting users in the targetted city. It then calls the all users endpoint. Users returned from the first query are excluded from the second query, then the remaining users are iterated through to find those within the specified distance of the target's city central point (using the Haversine formula). The resulting list of users is combined with those returned from the first query to produce all the users in the city and those considered to be nearby.
 
@@ -29,3 +27,10 @@ npm run start
 ```bash
 npm run test
 ```
+
+## Demo
+
+A hosted version of the MVP build of the solution is available below.  Please note that the demo utilises the CORS-anywhere proxy so may not be able to return results when the service is busy - this will at least demonstrate the solution's error handling at these times.
+
+[View Demo](https://jamcnaughton.github.io/city-user-list/index.html)
+
